@@ -10,7 +10,7 @@ CONFIG += c++17
 QT += core gui
 QT +=core
 
-TARGET      = countcode
+TARGET      = NumberOfCodes
 TEMPLATE    = app
 DESTDIR     = $$PWD/../bin
 CONFIG      += warn_off

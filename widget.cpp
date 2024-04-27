@@ -6,9 +6,8 @@
 #include "qfileinfo.h"
 #include "qdebug.h"
 
-Widget::Widget(QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::Widget)
+
+Widget::Widget(QWidget *parent): QWidget(parent), ui(new Ui::Widget)
 {
     ui->setupUi(this);
     this->initForm();
@@ -38,7 +37,7 @@ void Widget::initForm()
     ui->tableWidget->verticalHeader()->setHighlightSections(false);
 
     for (int i = 0; i < columnCount; i++) {
-        ui->tableWidget->setColumnWidth(i, columnWidth.at(i));
+        ui->tableWidget->setColumnWidth(i, columWidth.at(i));
     }
 
     //设置前景色
@@ -95,12 +94,12 @@ void Widget::NumberOfCodes(const QString &filePath)
             }
 
             //递归找出文件
-            countCode(fileInfo.absoluteFilePath());
+            NumberOfCodes(fileInfo.absoluteFilePath());
         }
     }
 }
 
-void Widget::NumberOfCodes(const QString &files)
+void Widget::NumberOfCodes(const QStringList &files)
 {
     int lineCode;
     int lineBlank;
@@ -117,7 +116,7 @@ void Widget::NumberOfCodes(const QString &files)
 
     for (int i = 0; i < count; i++) {
         QFileInfo fileInfo(files.at(i));
-        countCode(fileInfo.filePath(), lineCode, lineBlank, lineNotes);
+        NumberOfCodes(fileInfo.filePath(), lineCode, lineBlank, lineNotes);
         int lineAll = lineCode + lineBlank + lineNotes;
 
         QTableWidgetItem *itemName = new QTableWidgetItem;
@@ -193,7 +192,7 @@ void Widget::NumberOfCodes(const QString &files)
     ui->labPercentBlank->setText(QString("%1%").arg(percent, 5, 'f', 2, QChar(' ')));
 }
 
-void Widget::NumberofCodes(const QString &fileName,int &lineCode,int &lineBlank,int &lineNotes)
+void Widget:: NumberOfCodes(const QString &fileName, int &lineCode, int &lineBlank, int &lineNotes)
 {
     lineCode = lineBlank = lineNotes = 0;
     QFile file(fileName);
